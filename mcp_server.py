@@ -15,51 +15,26 @@ Connect remotely: use the SSE URL, e.g. https://your-domain.com/sse
 
 import os
 import sys
-from typing import Literal
 
 from mcp.server.fastmcp import FastMCP
+
+from tools import get_author_name, get_temp, get_weather
 
 # For SSE (internet): bind to all interfaces; port from env or 8000
 _HOST = os.environ.get("FASTMCP_HOST", "0.0.0.0")
 _PORT = int(os.environ.get("FASTMCP_PORT", "8000"))
 
 mcp = FastMCP(
-    "ai-agent-tools",
+    "turing-test",
     instructions="Tools for weather, temperature, and author lookup.",
     host=_HOST,
     port=_PORT,
 )
 
-
-@mcp.tool()
-def get_weather(
-    location: str,
-    units: Literal["celsius", "fahrenheit"] = "celsius",
-    include_forecast: bool = False,
-) -> str:
-    """Get current weather and optional 5-day forecast for a location."""
-    temp = 22 if units == "celsius" else 72
-    result = f"Current weather in {location}: {temp} degrees {units[0].upper()}"
-    if include_forecast:
-        result += "\nNext 5 days: Sunny"
-    return result
-
-
-@mcp.tool()
-def get_temp(
-    location: str,
-    units: Literal["celsius", "fahrenheit"] = "celsius",
-) -> str:
-    """Get the current temperature for a location."""
-    temp = 22 if units == "celsius" else 72
-    return f"Temperature in {location}: {temp}°{units[0].upper()}"
-
-
-@mcp.tool()
-def get_author_name(book_or_work: str) -> str:
-    """Get the author name for a book, article, or other work."""
-    # Mock lookup: return a placeholder author based on the title
-    return f"Author of \"{book_or_work}\": Vikash"
+# Register tools from tools.py
+mcp.tool()(get_weather)
+mcp.tool()(get_temp)
+mcp.tool()(get_author_name)
 
 
 if __name__ == "__main__":
