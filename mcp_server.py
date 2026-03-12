@@ -18,7 +18,15 @@ import sys
 
 from mcp.server.fastmcp import FastMCP
 
-from tools import get_author_name, get_temp, get_weather
+from tools import (
+    get_author_name,
+    get_option_approval_details,
+    get_temp,
+    get_trip_farequote,
+    get_weather,
+    approve_trip,
+    reject_trip,
+)
 
 # For SSE (internet): bind to all interfaces; port from env or 8000
 _HOST = os.environ.get("FASTMCP_HOST", "0.0.0.0")
@@ -35,6 +43,10 @@ mcp = FastMCP(
 mcp.tool()(get_weather)
 mcp.tool()(get_temp)
 mcp.tool()(get_author_name)
+mcp.tool()(get_option_approval_details)
+mcp.tool()(get_trip_farequote)
+mcp.tool()(approve_trip)
+mcp.tool()(reject_trip)
 
 
 if __name__ == "__main__":
