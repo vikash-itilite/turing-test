@@ -1,12 +1,2 @@
-langchain>=0.3.0
-langchain-core>=0.3.0
-langchain-google-genai>=2.0.0
-langgraph>=0.2.0
-pydantic>=2.0
-python-dotenv>=1.0.0
-
-# MCP server (for mcp_server.py)
+# MCP server (mcp_server.py) - only dependency used in this project
 mcp>=1.0.0
-
-# ChatGPT bridge (optional: chatgpt_mcp_bridge.py)
-openai>=1.0.0
